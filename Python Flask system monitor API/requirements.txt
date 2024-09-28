@@ -1,0 +1,11 @@
+# For monitoring:
+flask
+GPUtil
+psutil
+jsonify
+
+# For GUI:
+streamlit
+
+# For API docs:
+flasgger
