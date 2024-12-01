@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+  namespace: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+      - name: product-service
+        image: product-service:v1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DB_HOST
+          value: mysql.database.svc.cluster.local
+        - name: DB_USER
+          value: root
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-root-password
+        - name: DB_NAME
+          value: carstore
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+  namespace: backend
+spec:
+  selector:
+    app: product-service
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
