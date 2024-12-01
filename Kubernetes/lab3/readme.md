@@ -3,38 +3,42 @@ solution to Lab3 as part of Hudi's assignments.
 
 Set up:
 
-    We'll be using Minikube inorder to complete and test the assignment.
+We'll be using Minikube inorder to complete and test the assignment.
 
-    create all relevant namespaces:
+create all relevant namespaces:
 
-        kubectl create namespace frontend
-        kubectl create namespace backend
+    kubectl create namespace frontend
+    kubectl create namespace backend
 
-    Create docker image locally for the 'flask-backend' applicaton:
+Create docker image locally for the 'flask-backend' applicaton:
 
-        docker build -t flask-backend flask-backend/.
-        (Or CD into the folder and run docker build -t flask-backend:v1 .)
+    docker build -t flask-backend flask-backend/.
+
+Or CD into the folder and run 
+
+    docker build -t flask-backend:v1 .
         
-        !Important: Load the image into the minikube enviornment:
-            minikube image load flask-backend:v1
+!Important: Load the image into the minikube enviornment:
 
-    deploy all deployments (make sure you are in the root folder - lab3):
+    minikube image load flask-backend:v1
 
-        kubectl apply -f .
+deploy all deployments (make sure you are in the root folder - lab3):
 
-    Connect to the frontend container via terminal via the following command:
+    kubectl apply -f .
 
-         kubectl exec -it -n frontend <frontend-pod-name> -- /bin/bash 
+Connect to the frontend container via terminal via the following command:
 
-    Install curl inorder to test connectivity to the flask API,
-    and run the curl command to the backend-service via its FQDN:
+    kubectl exec -it -n frontend <frontend-pod-name> -- /bin/bash 
 
-        apt-get install curl
+Install curl inorder to test connectivity to the flask API,
+and run the curl command to the backend-service via its FQDN:
 
-        curl backend-service.backend.svc.cluster.local:5000
+    apt-get install curl
 
-    After running the curl command, you should get the following reply in the terminal:
+    curl backend-service.backend.svc.cluster.local:5000
 
-        "Hello from Backend!"
+After running the curl command, you should get the following reply in the terminal:
+
+"Hello from Backend!"
 
 And that's it folks!
